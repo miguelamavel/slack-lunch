@@ -19,6 +19,9 @@ class SlackClient:
         for dish in dish_array:
             message = message + '%s\n%s\n\n' % (dish.title, dish.price)
 
+        if not dish_array:
+            message = message + '\nNo menu available'
+
         self.menu_attachments.append(
             {
                 "text": message,

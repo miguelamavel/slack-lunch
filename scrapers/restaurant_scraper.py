@@ -13,7 +13,6 @@ class RestaurantScraper:
         self.dish_array = []
         self.icon = None
         self.color = None
-        self.scrape()
 
     def scrape(self):
         raise NotImplementedError

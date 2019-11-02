@@ -1,3 +1,4 @@
+from scrapers.serial_burgers_scraper import SerialBurgersScraper
 from scrapers.velryba_scraper import VelrybaScraper
 from slack_client import SlackClient
 import os
@@ -6,7 +7,8 @@ if __name__ == '__main__':
     client = SlackClient(os.environ['SLACK_ACCESS_TOKEN'], '#test_channel')
 
     scrapers = [
-        VelrybaScraper()
+        VelrybaScraper(),
+        SerialBurgersScraper(),
     ]
 
     for scraper in scrapers:
