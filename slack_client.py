@@ -12,7 +12,7 @@ class SlackClient:
 
         self.menu_attachments = []
 
-    def add_menu(self, restaurant, dish_array: Sequence[Dish], restaurant_icon=None):
+    def add_menu(self, restaurant, dish_array: Sequence[Dish], restaurant_icon=None, color=None):
         message = restaurant_icon + ' ' if restaurant_icon else None
         message = message + '*%s*\n\n' % restaurant
 
@@ -23,7 +23,7 @@ class SlackClient:
             {
                 "text": message,
                 "fallback": "Fallback",
-                "color": "#233625",
+                "color": color if color else "#233625",
                 "attachment_type": "default"
             }
         )
