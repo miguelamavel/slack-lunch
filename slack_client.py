@@ -35,7 +35,7 @@ class SlackClient:
         self.client.chat_postMessage(
             **{
                 "channel": self.slack_channel,
-                "text": "Menus",
+                "text": "Today's menus",
                 "attachments": self.menu_attachments
             })
 
