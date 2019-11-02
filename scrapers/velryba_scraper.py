@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import requests
 from lxml import html
 
@@ -17,6 +19,13 @@ class VelrybaScraper(RestaurantScraper):
         response = requests.get('https://www.kavarnavelryba.cz/polednimenu/')
 
         tree = html.fromstring(response.content)
+
+        today = datetime.today()
+        date_str = tree.xpath('//h1[@class="headline__primary"]/text()')[0]
+        menu_date = datetime.strptime(date_str, 'Polední menu %d.%m.')
+
+        if today.day != menu_date.day or today.month != menu_date.month:
+            return
 
         dish_elements = tree.xpath('//li[@class="menu-list__item"]')
 
