@@ -2,7 +2,6 @@ from datetime import datetime
 
 import requests
 from lxml import html
-import re
 
 from scrapers.restaurant_scraper import RestaurantScraper, Dish
 
@@ -60,7 +59,7 @@ class LaLocaScraper(RestaurantScraper):
         start_date = self.translate_date(date_str[0].lower())
         end_date = self.translate_date(date_str[1].lower())
 
-        if not (start_date.day < today.day < end_date.day and start_date.month < today.month < end_date.month):
+        if not (start_date.day <= today.day <= end_date.day and start_date.month <= today.month <= end_date.month):
             return
 
         p_elements = tree.xpath('//div[@class="sqs-block-content"]//p')
