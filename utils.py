@@ -24,3 +24,10 @@ cz_weekday_map = {
     5: 'Sobota',
     6: 'Neděle',
 }
+
+def is_int(string):
+    try:
+        int(string)
+        return True
+    except ValueError:
+        return False

@@ -4,7 +4,7 @@ import requests
 from lxml import html
 
 from scrapers.restaurant_scraper import RestaurantScraper, Dish
-from utils import cz_weekdays, cz_weekday_map
+from utils import cz_weekdays, cz_weekday_map, is_int
 
 protected_texts = ['Polévka', 'Hlavní chod', 'Hlavní chody', 'bez polévky']
 
@@ -45,13 +45,14 @@ class KathmanduScraper(RestaurantScraper):
         if today_weekday in cz_weekday_map and cz_weekday_map[today_weekday] in dishes:
             today_dishes = dishes[cz_weekday_map[today_weekday]]
             for dish in today_dishes:
+                separated_prices = re.split('\s\s+', dish)
                 if len(self.dish_array) < 2:
                     self.dish_array.append(
                         Dish(dish, '+ 10 Kč')
                     )
-                else:
-                    separated_prices = re.split('\s\s+', dish)
-                    if len(separated_prices) > 1:
+                elif len(separated_prices) > 1:
+                    price = separated_prices[1].split(',')[0]
+                    if is_int(price):
                         self.dish_array.append(
-                            Dish(separated_prices[0], separated_prices[1].split(',')[0] + ' Kč')
+                            Dish(separated_prices[0], price + ' Kč')
                         )
