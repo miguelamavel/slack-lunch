@@ -8,6 +8,7 @@ class RestaurantScraper:
     dish_array: List[Dish]
     icon: str
     color: str
+    link: str
 
     def __init__(self):
         self.dish_array = []

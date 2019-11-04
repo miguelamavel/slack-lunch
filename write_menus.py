@@ -23,6 +23,7 @@ if __name__ == '__main__':
         client.add_menu(scraper.name,
                         scraper.dish_array,
                         restaurant_icon=scraper.icon,
-                        color=scraper.color)
+                        color=scraper.color,
+                        link=scraper.link)
 
     client.write_menu()

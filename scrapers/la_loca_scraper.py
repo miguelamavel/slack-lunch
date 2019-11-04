@@ -13,6 +13,7 @@ class LaLocaScraper(RestaurantScraper):
         self.name = 'La Loca'
         self.icon = ':mushroom:'
         self.color = '#c43025'
+        self.link = 'https://togethertastesbetter.cz/obedove-menu'
         self.scrape()
 
     @staticmethod
@@ -26,7 +27,7 @@ class LaLocaScraper(RestaurantScraper):
         return datetime.strptime(eng_date, '%d %B')
 
     def scrape(self):
-        response = requests.get('https://togethertastesbetter.cz/obedove-menu')
+        response = requests.get(self.link)
 
         tree = html.fromstring(response.content)
 

@@ -9,4 +9,5 @@ class SerialBurgersScraper(ZomatoScraper):
         self.name = 'Serial Burgers'
         self.icon = ':knife:'
         self.color = '#282a36'
+        self.link = 'https://www.zomato.com/praha/serial-burgers-nov%C3%A9-m%C4%9Bsto-praha-1/daily-menu'
         self.scrape()

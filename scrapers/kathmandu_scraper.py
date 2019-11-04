@@ -15,10 +15,11 @@ class KathmanduScraper(RestaurantScraper):
         self.name = 'Kathmandu'
         self.icon = ':flag-np:'
         self.color = '#1224b0'
+        self.link = 'https://www.restauracekathmandu.cz/denni-menu'
         self.scrape()
 
     def scrape(self):
-        response = requests.get('https://www.restauracekathmandu.cz/denni-menu')
+        response = requests.get(self.link)
 
         tree = html.fromstring(response.content)
 

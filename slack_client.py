@@ -12,10 +12,11 @@ class SlackClient:
 
         self.menu_attachments = []
 
-    def add_menu(self, restaurant, dish_array: Sequence[Dish], restaurant_icon=None, color=None):
-        message = restaurant_icon + ' ' if restaurant_icon else None
-        message = message + '*%s*\n\n' % restaurant
+    def add_menu(self, restaurant, dish_array: Sequence[Dish], restaurant_icon=None, color=None, link=None):
+        title = restaurant_icon + ' ' if restaurant_icon else None
+        title = title + '%s\n\n' % restaurant
 
+        message = ''
         for dish in dish_array:
             message = message + '%s\n%s\n\n' % (dish.title, dish.price)
 
@@ -25,6 +26,8 @@ class SlackClient:
         self.menu_attachments.append(
             {
                 "text": message,
+                "title": title,
+                "title_link": link,
                 "fallback": "Fallback",
                 "color": color if color else "#233625",
                 "attachment_type": "default"

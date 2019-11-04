@@ -13,10 +13,11 @@ class VelrybaScraper(RestaurantScraper):
         self.name = 'Velryba'
         self.icon = ':whale:'
         self.color = '#397ea3'
+        self.link = 'https://www.kavarnavelryba.cz/polednimenu/'
         self.scrape()
 
     def scrape(self):
-        response = requests.get('https://www.kavarnavelryba.cz/polednimenu/')
+        response = requests.get(self.link)
 
         tree = html.fromstring(response.content)
 

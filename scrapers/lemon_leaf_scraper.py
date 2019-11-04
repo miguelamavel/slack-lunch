@@ -13,10 +13,11 @@ class LemonLeafScraper(RestaurantScraper):
         self.name = 'Lemon Leaf'
         self.icon = ':lemon:'
         self.color = '#90c234'
+        self.link = 'https://www.lemon.cz/lunch-menu/'
         self.scrape()
 
     def scrape(self):
-        response = requests.get('https://www.lemon.cz/lunch-menu/')
+        response = requests.get(self.link)
 
         tree = html.fromstring(response.content)
 
