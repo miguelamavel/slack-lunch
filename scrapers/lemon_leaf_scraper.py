@@ -3,7 +3,7 @@ import requests
 from lxml import html
 
 from scrapers.restaurant_scraper import RestaurantScraper, Dish
-from utils import cz_months_map, cz_weekdays, cz_weekday_map
+from utils import cz_weekday_map
 
 
 class LemonLeafScraper(RestaurantScraper):
@@ -22,7 +22,7 @@ class LemonLeafScraper(RestaurantScraper):
 
         today = datetime.today()
         today_token = today.strftime('%-d. %-m. ') + cz_weekday_map[today.weekday()]
-        h2_array = tree.xpath('//h2/text()')
+        h2_array = [h.strip() for h in tree.xpath('//h2/text()')]
         dates = [elem for sublist in [d.strip().split(' & ') for d in h2_array]
                  for elem in sublist]
 
