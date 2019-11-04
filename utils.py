@@ -21,4 +21,6 @@ cz_weekday_map = {
     2: 'Středa',
     3: 'Čtvrtek',
     4: 'Pátek',
+    5: 'Sobota',
+    6: 'Neděle',
 }
