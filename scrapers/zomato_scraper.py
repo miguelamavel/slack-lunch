@@ -31,7 +31,7 @@ class ZomatoScraper(RestaurantScraper):
             if dish['dish']['dish_id'] in ids[i + 1:]:
                 continue
 
-            name = dish['dish']['name'].strip()
+            name = dish['dish']['name'].replace('  ', ' ').strip()
             price = dish['dish']['price'].strip()
 
             if not name or not price:
