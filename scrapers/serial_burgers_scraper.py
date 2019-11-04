@@ -4,7 +4,7 @@ from scrapers.zomato_scraper import ZomatoScraper
 class SerialBurgersScraper(ZomatoScraper):
     def __init__(self):
         super().__init__()
-        self.res_id = 16506026
+        self.res_id = 18257533
 
         self.name = 'Serial Burgers'
         self.icon = ':knife:'

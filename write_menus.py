@@ -1,3 +1,4 @@
+from scrapers.jina_krajina_scraper import JinaKrajinaScraper
 from scrapers.kathmandu_scraper import KathmanduScraper
 from scrapers.la_loca_scraper import LaLocaScraper
 from scrapers.lemon_leaf_scraper import LemonLeafScraper
@@ -10,11 +11,12 @@ if __name__ == '__main__':
     client = SlackClient(os.environ['SLACK_ACCESS_TOKEN'], '#test_channel')
 
     scrapers = [
+        VelrybaScraper(),
+        SerialBurgersScraper(),
+        JinaKrajinaScraper(),
         LemonLeafScraper(),
         KathmanduScraper(),
         LaLocaScraper(),
-        VelrybaScraper(),
-        SerialBurgersScraper(),
     ]
 
     for scraper in scrapers:
