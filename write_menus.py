@@ -1,3 +1,4 @@
+from scrapers.estrella_scraper import EstrellaScraper
 from scrapers.jina_krajina_scraper import JinaKrajinaScraper
 from scrapers.kathmandu_scraper import KathmanduScraper
 from scrapers.la_loca_scraper import LaLocaScraper
@@ -17,6 +18,7 @@ if __name__ == '__main__':
         LemonLeafScraper(),
         KathmanduScraper(),
         LaLocaScraper(),
+        EstrellaScraper(),
     ]
 
     for scraper in scrapers:
