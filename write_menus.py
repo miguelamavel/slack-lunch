@@ -15,8 +15,8 @@ if __name__ == '__main__':
         VelrybaScraper(),
         SerialBurgersScraper(),
         JinaKrajinaScraper(),
-        LemonLeafScraper(),
         KathmanduScraper(),
+        LemonLeafScraper(),
         LaLocaScraper(),
         EstrellaScraper(),
     ]
