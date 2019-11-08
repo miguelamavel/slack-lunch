@@ -48,6 +48,9 @@ class LaLocaScraper(RestaurantScraper):
 
         for p in p_elements:
             inner_text = ''.join(p.xpath('.//text()')).strip()
+            if current_day == 'Pátek' and p.xpath('./@data-rte-preserve-empty') and 'true' in p.xpath('./@data-rte-preserve-empty')[0]:
+                break
+
             if not inner_text:
                 continue
             if inner_text in cz_weekdays:
