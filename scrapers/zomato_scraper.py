@@ -27,6 +27,7 @@ class ZomatoScraper(RestaurantScraper):
         dish_list = response_js['daily_menus'][0]['daily_menu']['dishes']
         ids = [dish['dish']['dish_id'] for dish in dish_list]
 
+        prev_dish = ''
         for i, dish in enumerate(dish_list):
             if dish['dish']['dish_id'] in ids[i + 1:]:
                 continue
@@ -35,7 +36,13 @@ class ZomatoScraper(RestaurantScraper):
             price = dish['dish']['price'].strip()
 
             if not name or not price:
+                if name:
+                    prev_dish = name
                 continue
+
+            if prev_dish:
+                name = (prev_dish + ' ' + name).replace('  ', ' ').strip()
+                prev_dish = ''
 
             self.dish_array.append(
                 Dish(name, price)
