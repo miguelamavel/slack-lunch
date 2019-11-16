@@ -4,7 +4,7 @@ import requests
 from lxml import html
 
 from scrapers.restaurant_scraper import RestaurantScraper, Dish
-from utils import cz_months_map, cz_weekdays, cz_weekday_map
+from utils import cz_weekday_map
 
 
 class EstrellaScraper(RestaurantScraper):
@@ -42,6 +42,9 @@ class EstrellaScraper(RestaurantScraper):
                       '/following-sibling::p[position() >= 1 and position() <= 2]//text()' % title_string
         menu = self.tree.xpath(dishes_path)
         menu_price = ''.join(self.tree.xpath('//em[contains(string(), "hlavní")]//text()'))
+
+        if not menu:
+            return
 
         self.dish_array.append(
             Dish(menu[0], '+ 30 / 50  Kč (malá / velká)')
