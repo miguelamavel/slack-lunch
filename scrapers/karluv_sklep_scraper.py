@@ -1,10 +1,8 @@
 import re
-from datetime import datetime
 import requests
 from lxml import html
 
 from scrapers.restaurant_scraper import RestaurantScraper, Dish
-from utils import cz_months_map, cz_weekdays, cz_weekday_map
 
 
 class KarluvSklepScraper(RestaurantScraper):
