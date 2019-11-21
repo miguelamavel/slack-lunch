@@ -11,11 +11,9 @@ from slack_client import SlackClient
 import os
 
 if __name__ == '__main__':
-    client = SlackClient(os.environ['SLACK_ACCESS_TOKEN'], '#prague_lunch')
-
     scrapers = [
-        SrdcovkaScraper(),
         KarluvSklepScraper(),
+        SrdcovkaScraper(),
         VelrybaScraper(),
         SerialBurgersScraper(),
         JinaKrajinaScraper(),
@@ -24,6 +22,8 @@ if __name__ == '__main__':
         LaLocaScraper(),
         EstrellaScraper(),
     ]
+
+    client = SlackClient(os.environ['SLACK_ACCESS_TOKEN'], '#prague_lunch')
 
     for scraper in scrapers:
         client.add_menu(scraper.name,
