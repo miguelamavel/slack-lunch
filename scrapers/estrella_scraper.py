@@ -14,7 +14,7 @@ class EstrellaScraper(RestaurantScraper):
         self.name = 'Estrella'
         self.icon = ':star:'
         self.color = '#f0dd0a'
-        self.link = 'http://www.estrellarestaurant.cz/denni-menu'
+        self.link = 'http://estrellarestaurant.cz/index.php/denni-menu/'
         self.scrape()
 
         self.tree = None
@@ -36,34 +36,49 @@ class EstrellaScraper(RestaurantScraper):
         self.tree = html.fromstring(response.content)
 
         today = datetime.today()
-        title_string = cz_weekday_map[today.weekday()].upper() + ' ' + today.strftime('%-d.%-m.')
+        title_string = cz_weekday_map[today.weekday()].upper() + ' ' + today.strftime('%-d.%-m')
 
-        dishes_path = '//p[contains(string(), "%s")]' \
-                      '/following-sibling::p[position() >= 1 and position() <= 2]//text()' % title_string
-        menu = self.tree.xpath(dishes_path)
-        menu_price = ''.join(self.tree.xpath('//em[contains(string(), "hlavní")]//text()'))
+        today_element = self.tree.xpath('//div[@class="dine-menu-wrapper" and contains(string(), "%s")]' % title_string)
 
-        if not menu:
+        if not today_element:
             return
 
-        self.dish_array.append(
-            Dish(menu[0], '+ 30 / 50  Kč (malá / velká)')
-        )
-        self.dish_array.append(
-            Dish(menu[1], self.separate_dish_price(menu_price)[1])
-        )
+        today_element = today_element[0]
+        names = today_element.xpath('.//h3//text()')
+        prices = today_element.xpath('.//span[@class="menu-item-price"]//text()')
 
-        name, price = self.get_dish('SPECIALITA')
+        for name, price in zip(names, prices):
+            if name.lower() == 'combo':
+                continue
+            self.dish_array.append(
+                Dish(name.replace(' - ', ', ').strip(), price.strip())
+            )
+
+
+        wrappers = self.tree.xpath('//div[@class="dine-menu-wrapper"]')
+        special_idx = [w.xpath(".//h2//text()")[0] for w in wrappers].index('Specialita týdne')
+        special_items = wrappers[special_idx].xpath('.//div[@class="dine-menu-item"]')
+
+        if len(special_items) != 3:
+            return
+
+        name = special_items[0].xpath('.//h3//text()')[0].replace(' - ', ', ').strip()
+        price = special_items[0].xpath('.//span[@class="menu-item-price"]//text()')[0].replace('CZK', 'Kč')
+
         self.dish_array.append(
             Dish('*Specialita:* ' + name, price)
         )
 
-        name, price = self.get_dish('SALÁT / LEHKÉ JÍDLO')
+        name = special_items[1].xpath('.//div[@class="menu-item-desc"]//text()')[0].replace(' - ', ', ').strip()
+        price = special_items[1].xpath('.//span[@class="menu-item-price"]//text()')[0].replace('CZK', 'Kč')
+
         self.dish_array.append(
             Dish('*Salát/Lehké jídlo:* ' + name, price)
         )
 
-        name, price = self.get_dish('DEZERT')
+        name = special_items[2].xpath('.//div[@class="menu-item-desc"]//text()')[0].replace(' - ', ', ').strip()
+        price = special_items[2].xpath('.//span[@class="menu-item-price"]//text()')[0].replace('CZK', 'Kč')
+
         self.dish_array.append(
-            Dish('*Dezert:* ' + name, price)
+            Dish('*Desert:* ' + name, price)
         )
