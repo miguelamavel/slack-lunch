@@ -18,9 +18,9 @@ class LaLocaScraper(RestaurantScraper):
 
     @staticmethod
     def translate_date(date_str):
-        elements = date_str.split('. ')
-        day_str = elements[0]
-        month_str = elements[1]
+        elements = date_str.split('.')
+        day_str = elements[0].strip()
+        month_str = elements[1].strip()
 
         eng_date = day_str + ' ' + cz_months_map[month_str].capitalize()
 
