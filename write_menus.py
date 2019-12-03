@@ -23,7 +23,7 @@ if __name__ == '__main__':
         EstrellaScraper(),
     ]
 
-    client = SlackClient(os.environ['SLACK_ACCESS_TOKEN'], '#prague_lunch')
+    client = SlackClient(os.environ['SLACK_ACCESS_TOKEN'], '#test_channel')
 
     for scraper in scrapers:
         client.add_menu(scraper.name,

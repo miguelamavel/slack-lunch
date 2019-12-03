@@ -37,8 +37,11 @@ class EstrellaScraper(RestaurantScraper):
 
         today = datetime.today()
         title_string = cz_weekday_map[today.weekday()].upper() + ' ' + today.strftime('%-d.%-m')
+        padded_title_string = cz_weekday_map[today.weekday()].upper() + ' ' + today.strftime('%d.%m')
 
-        today_element = self.tree.xpath('//div[@class="dine-menu-wrapper" and contains(string(), "%s")]' % title_string)
+        today_element = self.tree.xpath('//div[@class="dine-menu-wrapper" and '
+                                        '(contains(string(), "%s") or contains(string(), "%s"))]'
+                                        % (title_string, padded_title_string))
 
         if not today_element:
             return
