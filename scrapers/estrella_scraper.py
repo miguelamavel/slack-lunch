@@ -36,8 +36,8 @@ class EstrellaScraper(RestaurantScraper):
         self.tree = html.fromstring(response.content)
 
         today = datetime.today()
-        title_string = cz_weekday_map[today.weekday()].upper() + ' ' + today.strftime('%-d.%-m')
-        padded_title_string = cz_weekday_map[today.weekday()].upper() + ' ' + today.strftime('%d.%m')
+        title_string = today.strftime('%-d.%-m')
+        padded_title_string = today.strftime('%d.%m')
 
         today_element = self.tree.xpath('//div[@class="dine-menu-wrapper" and '
                                         '(contains(string(), "%s") or contains(string(), "%s"))]'
@@ -59,7 +59,15 @@ class EstrellaScraper(RestaurantScraper):
 
 
         wrappers = self.tree.xpath('//div[@class="dine-menu-wrapper"]')
-        special_idx = [w.xpath(".//h2//text()")[0] for w in wrappers].index('Specialita týdne')
+        h2_wrappers = [w.xpath('.//h2//text()')[0].lower() for w in wrappers]
+
+        if 'specialita týdne' in h2_wrappers:
+            special_idx = h2_wrappers.index('specialita týdne')
+        elif 'speciality týdne' in h2_wrappers:
+            special_idx = h2_wrappers.index('speciality týdne')
+        else:
+            return
+
         special_items = wrappers[special_idx].xpath('.//div[@class="dine-menu-item"]')
 
         if len(special_items) != 3:
