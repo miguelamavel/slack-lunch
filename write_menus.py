@@ -1,3 +1,4 @@
+from scrapers.chilli_point_scraper import ChilliPointScraper
 from scrapers.estrella_scraper import EstrellaScraper
 from scrapers.jina_krajina_scraper import JinaKrajinaScraper
 from scrapers.karluv_sklep_scraper import KarluvSklepScraper
@@ -18,6 +19,7 @@ if __name__ == '__main__':
         VelrybaScraper(),
         SerialBurgersScraper(),
         JinaKrajinaScraper(),
+        ChilliPointScraper(),
         KathmanduScraper(),
         TheNestScraper(),
         LemonLeafScraper(),
@@ -25,7 +27,7 @@ if __name__ == '__main__':
         EstrellaScraper(),
     ]
 
-    client = SlackClient(os.environ['SLACK_ACCESS_TOKEN'], '#prague_lunch')
+    client = SlackClient(os.environ['SLACK_ACCESS_TOKEN'], '#test_channel')
 
     for scraper in scrapers:
         client.add_menu(scraper.name,
