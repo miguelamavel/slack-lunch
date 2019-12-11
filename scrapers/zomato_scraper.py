@@ -21,7 +21,7 @@ class ZomatoScraper(RestaurantScraper):
 
         response_js = response.json()
 
-        if not response_js['daily_menus']:
+        if 'daily_menus' not in response_js or not response_js['daily_menus']:
             return
 
         dish_list = response_js['daily_menus'][0]['daily_menu']['dishes']
