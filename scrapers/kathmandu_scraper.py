@@ -34,13 +34,14 @@ class KathmanduScraper(RestaurantScraper):
 
         for inner_text in elements:
             inner_text = inner_text.strip()
+            inner_text = inner_text.replace('Polévka/Soup:', '').strip()
             if not inner_text:
                 continue
             first_part = inner_text.split('/')[0]
             if first_part.capitalize() in cz_weekdays:
                 current_day = first_part.capitalize()
             elif current_day and first_part not in protected_texts:
-                dishes[current_day].append(inner_text)
+                dishes[current_day].append(re.sub(r'\d.\s', '', inner_text))
 
         today_weekday = today.weekday()
         if today_weekday in cz_weekday_map and cz_weekday_map[today_weekday] in dishes:
@@ -52,8 +53,10 @@ class KathmanduScraper(RestaurantScraper):
                         Dish(dish, '+ 10 Kč')
                     )
                 elif len(separated_prices) > 1:
-                    price = separated_prices[1].split(',')[0]
+                    separated = re.findall(r'(.*)\s+(\d+),-\s+(\d+),-', dish)[0]
+                    dish_name = separated[0]
+                    price = separated[1]
                     if is_int(price):
                         self.dish_array.append(
-                            Dish(separated_prices[0], price + ' Kč')
+                            Dish(dish_name, price + ' Kč')
                         )
