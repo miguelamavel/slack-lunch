@@ -41,19 +41,19 @@ class KathmanduScraper(RestaurantScraper):
             if first_part.capitalize() in cz_weekdays:
                 current_day = first_part.capitalize()
             elif current_day and first_part not in protected_texts:
-                dishes[current_day].append(re.sub(r'\d.\s', '', inner_text))
+                dishes[current_day].append(re.sub(r'^\d.\s', '', inner_text))
 
         today_weekday = today.weekday()
         if today_weekday in cz_weekday_map and cz_weekday_map[today_weekday] in dishes:
             today_dishes = dishes[cz_weekday_map[today_weekday]]
             for dish in today_dishes:
-                separated_prices = re.split('\s\s+', dish)
+                detected_dish = re.findall(r'(.*)\s+(\d+),\s?-\s+(\d+),\s?-', dish)
                 if len(self.dish_array) < 2:
                     self.dish_array.append(
                         Dish(dish, '+ 10 Kč')
                     )
-                elif len(separated_prices) > 1:
-                    separated = re.findall(r'(.*)\s+(\d+),-\s+(\d+),-', dish)[0]
+                elif detected_dish:
+                    separated = detected_dish[0]
                     dish_name = separated[0]
                     price = separated[1]
                     if is_int(price):
