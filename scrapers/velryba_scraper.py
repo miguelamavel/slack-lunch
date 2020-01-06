@@ -23,7 +23,11 @@ class VelrybaScraper(RestaurantScraper):
 
         today = datetime.today()
         date_str = tree.xpath('//h1[@class="headline__primary"]/text()')[0]
-        menu_date = datetime.strptime(date_str, 'Polední menu %d.%m.')
+        try:
+            menu_date = datetime.strptime(date_str, 'Polední menu %d.%m.')
+        except ValueError:
+            print('Velryba: No date in page')
+            return
 
         if today.day != menu_date.day or today.month != menu_date.month:
             return
