@@ -23,7 +23,7 @@ if __name__ == '__main__':
         KathmanduScraper(),
         TheNestScraper(),
         LemonLeafScraper(),
-        LaLocaScraper(),
+        # LaLocaScraper(),
         EstrellaScraper(),
     ]
 
