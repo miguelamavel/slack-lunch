@@ -35,7 +35,7 @@ class SrdcovkaScraper(RestaurantScraper):
         for elements in li_elements:
             text_elements = elements.xpath('.//text()')
 
-            name = text_elements[0].strip()
+            name = text_elements[0].strip().capitalize()
             price = text_elements[-1].replace('-', '').strip()
 
             self.dish_array.append(
