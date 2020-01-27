@@ -22,7 +22,7 @@ class DynamoScraper(RestaurantScraper):
         tree = html.fromstring(response.content)
 
         today = datetime.today()
-        date_str = tree.xpath('//table//td//p/text()')
+        date_str = tree.xpath('(//table//td//p | //table//td//p//strong)/text()')
         if not date_str:
             return
         date_str = date_str[0]

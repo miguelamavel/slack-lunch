@@ -42,7 +42,7 @@ class GranFierroScraper(RestaurantScraper):
             if len(text_elements) != 2:
                 continue
 
-            name = text_elements[0].strip()
+            name = re.sub(r'\s+', ' ', text_elements[0]).strip()
             price = text_elements[1].strip()
 
             self.dish_array.append(
