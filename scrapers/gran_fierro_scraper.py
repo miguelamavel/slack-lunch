@@ -37,7 +37,7 @@ class GranFierroScraper(RestaurantScraper):
         for dish in dishes:
             if 'polední menu' in dish.lower():
                 continue
-            text_elements = re.split(r'\s+[–\-]\s+', dish)
+            text_elements = re.split(r'[\s+]?[–\-]\s+', dish)
 
             if len(text_elements) != 2:
                 continue
