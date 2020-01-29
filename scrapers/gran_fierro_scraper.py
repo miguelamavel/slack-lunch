@@ -31,13 +31,15 @@ class GranFierroScraper(RestaurantScraper):
         if today.date() != menu_date.date():
             return
 
-        dishes = [text.strip() for text in tree.xpath('//div[@class="flexbox"]//div[@class="news-header"]//text()')
-                  if text.strip()]
+        div = tree.xpath('//div[@class="flexbox"]//div[@class="news-header"]')[0]
+        dishes = [''.join(elem.xpath('.//text()')) for elem in div.xpath('(.//p | .//figcaption)')]
 
         for dish in dishes:
             if 'polední menu' in dish.lower():
                 continue
             text_elements = re.split(r'[\s+]?[–\-]\s+', dish)
+            if len(text_elements) > 2:
+                text_elements = [' - '.join(text_elements[:-1]), text_elements[-1]]
 
             if len(text_elements) != 2:
                 continue
