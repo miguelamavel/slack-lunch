@@ -54,7 +54,7 @@ class KathmanduScraper(RestaurantScraper):
                     )
                 elif detected_dish:
                     separated = detected_dish[0]
-                    dish_name = separated[0]
+                    dish_name = re.sub(r'\s+', ' ', separated[0]).strip()
                     price = separated[1]
                     if is_int(price):
                         self.dish_array.append(
