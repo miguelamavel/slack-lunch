@@ -32,9 +32,10 @@ class GranFierroScraper(RestaurantScraper):
             return
 
         div = tree.xpath('//div[@class="flexbox"]//div[@class="news-header"]')[0]
-        dishes = [''.join(elem.xpath('.//text()')) for elem in div.xpath('(.//p | .//figcaption)')]
+        dishes = [elem.xpath('.//text()') for elem in div.xpath('(.//p | .//figcaption | .)')]
+        flat_dishes = set([item.strip() for sublist in dishes for item in sublist if item.strip()])
 
-        for dish in dishes:
+        for dish in flat_dishes:
             if 'polední menu' in dish.lower():
                 continue
             text_elements = re.split(r'[\s+]?[–\-]\s+', dish)
