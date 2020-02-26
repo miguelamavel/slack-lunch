@@ -34,7 +34,7 @@ class DynamoScraper(RestaurantScraper):
         rows = tree.xpath('//table//tr')
         for row in rows:
             columns = [c.strip() for c in row.xpath('./td/text()') if c.strip()]
-            if not columns:
+            if not columns or len(columns) < 2:
                 continue
             name = re.sub(r'\s+', ' ', re.sub(r'\s?_\s?', ' ', columns[0]))
             price = columns[1] + ' Kč'
