@@ -26,7 +26,10 @@ class DynamoScraper(RestaurantScraper):
         if not date_str:
             return
         date_str = date_str[0]
-        menu_date = datetime.strptime(re.split('\s', date_str)[-1], '%d.%m.%Y')
+        try:
+            menu_date = datetime.strptime(re.split('\s', date_str)[-1], '%d.%m.%Y')
+        except ValueError:
+            return
 
         if today.date() != menu_date.date():
             return
