@@ -27,7 +27,7 @@ class DynamoScraper(RestaurantScraper):
             return
         date_str = date_str[0]
         try:
-            menu_date = datetime.strptime(re.split('\s', date_str)[-1], '%d.%m.%Y')
+            menu_date = datetime.strptime(re.split('\s', date_str.strip())[-1], '%d.%m.%Y')
         except ValueError:
             return
 
@@ -36,7 +36,7 @@ class DynamoScraper(RestaurantScraper):
 
         rows = tree.xpath('//table//tr')
         for row in rows:
-            columns = [c.strip() for c in row.xpath('./td/text()') if c.strip()]
+            columns = [c.strip() for c in row.xpath('./td//text()') if c.strip()]
             if not columns or len(columns) < 2:
                 continue
             name = re.sub(r'\s+', ' ', re.sub(r'\s?_\s?', ' ', columns[0]))
